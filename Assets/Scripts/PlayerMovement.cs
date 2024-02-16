@@ -45,11 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_spacePressed || !_groundCollision.IsOnGround) return;
-        
+        if (!_spacePressed || !_groundCollision.IsOnGround)
+        {
+            _animator.ResetTrigger(AnimationConstants.TriggerJump);
+            return;
+        }
+
         var soonToBeVelocity = _rb.velocity;
         soonToBeVelocity.y = jumpVelocity;
         _rb.velocity = soonToBeVelocity;
+        _groundCollision.IsOnGround = false;
         
         _animator.SetTrigger(AnimationConstants.TriggerJump);
     }
