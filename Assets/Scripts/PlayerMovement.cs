@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = transform.TransformDirection(new Vector3(input.x, 0, input.y) * movementSpeed) +
                        new Vector3(0, _rb.velocity.y, 0);
 
-        _spacePressed = Input.GetButton("Jump");
+        _spacePressed = Input.GetButtonDown("Jump");
 
         if (input.magnitude > 0.1f)
         {
