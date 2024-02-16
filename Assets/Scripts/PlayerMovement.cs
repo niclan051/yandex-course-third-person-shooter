@@ -10,12 +10,14 @@ public class PlayerMovement : MonoBehaviour
     private GroundCollision _groundCollision;
     private bool _spacePressed;
     private Camera _camera;
+    private Animator _animator;
 
     private void Start()
     {
         _camera = Camera.main;
         _rb = GetComponent<Rigidbody>();
         _groundCollision = GetComponentInChildren<GroundCollision>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -32,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
             rotation.y = _camera!.transform.rotation.eulerAngles.y;
             transform.rotation = Quaternion.Euler(rotation);
         }
+        
+        _animator.SetBool(AnimationConstants.BoolFalling, _rb.velocity.y < 0);
+        _animator.SetFloat(AnimationConstants.FloatInputHorizontal, input.x);
+        _animator.SetBool(AnimationConstants.BoolInputHorizontalZero, input.x == 0);
+        _animator.SetFloat(AnimationConstants.FloatInputVertical, input.y);
+        _animator.SetBool(AnimationConstants.BoolInputVerticalZero, input.y == 0);
+        _animator.SetBool(AnimationConstants.BoolOnGround, _groundCollision.IsOnGround);
     }
 
     private void FixedUpdate()
@@ -41,5 +50,7 @@ public class PlayerMovement : MonoBehaviour
         var soonToBeVelocity = _rb.velocity;
         soonToBeVelocity.y = jumpVelocity;
         _rb.velocity = soonToBeVelocity;
+        
+        _animator.SetTrigger(AnimationConstants.TriggerJump);
     }
 }
