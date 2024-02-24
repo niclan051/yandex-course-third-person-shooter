@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -15,5 +14,10 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         _rb.velocity = transform.TransformDirection(new Vector3(0, 0, speed));
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Destroy(gameObject);
     }
 }

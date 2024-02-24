@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,11 +10,15 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        _navMeshAgent.destination = player.transform.position;
+        if (_navMeshAgent.isOnNavMesh)
+        {
+            _navMeshAgent.SetDestination(player.transform.position);
+        }
     }
 }
