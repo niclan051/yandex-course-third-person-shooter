@@ -3,33 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : BaseHealth
 {
-    [SerializeField] private int maxHealth = 10;
-    private int _health;
     [SerializeField] private Color fullHealthColor;
     [SerializeField] private Color noHealthColor;
 
     private Renderer _renderer;
 
-    public void Damage(int damage)
+    public override void Damage(int amount)
     {
-        _health = Math.Max(0, _health - damage);
-        if (_health == 0)
+        base.Damage(amount);
+        if (Health == 0)
         {
             Destroy(gameObject);
         }
     }
 
-    private void Start()
+    protected override void Start()
     {
-        _health = maxHealth;
+        base.Start();
         _renderer = GetComponentInChildren<Renderer>();
     }
 
     private void Update()
     {
-        _renderer.material.color = Color.Lerp(noHealthColor, fullHealthColor, (float)_health / maxHealth);
+        _renderer.material.color = Color.Lerp(noHealthColor, fullHealthColor, (float)Health / maxHealth);
     }
 
     private void OnTriggerEnter(Collider other)
