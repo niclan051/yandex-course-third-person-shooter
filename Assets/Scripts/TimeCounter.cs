@@ -11,6 +11,6 @@ public class TimeCounter : MonoBehaviour
     private void Update()
     {
         CurrentTime = CurrentTime.AddSeconds(Time.deltaTime);
-        counters.ForEach(counter => counter.text = CurrentTime.ToLongTimeString());
+        counters.ForEach(counter => counter.text = CurrentTime.ToString("HH:mm:ss"));
     }
 }
