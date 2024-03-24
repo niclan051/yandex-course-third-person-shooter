@@ -7,7 +7,7 @@ public class CollectibleHeal : Collectible
         var playerHealth = collector.GetComponent<PlayerHealth>();
         if (playerHealth != null) {
             playerHealth.Heal(healAmount);
+            base.OnCollected(collector);
         }
-        base.OnCollected(collector);
     }
 }

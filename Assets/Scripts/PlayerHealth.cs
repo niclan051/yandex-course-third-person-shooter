@@ -1,11 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : BaseHealth {
     [SerializeField] private Color fullHealthColor;
     [SerializeField] private Color noHealthColor;
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private Animator gameOverPanelAnimator;
     [SerializeField] private AudioSource healSound;
     
@@ -21,7 +22,7 @@ public class PlayerHealth : BaseHealth {
     private void Update()
     {
         _renderer.material.color = Color.Lerp(noHealthColor, fullHealthColor, (float)Health / maxHealth);
-        healthSlider.value = (float)Health / maxHealth;
+        healthText.text = $"{Health}/{maxHealth}";
     }
 
     public override void Damage(int amount) {
@@ -45,7 +46,7 @@ public class PlayerHealth : BaseHealth {
     {
         if (other.collider.CompareTag("Enemy"))
         {
-            Damage(10);
+            Damage(Health / 10 + 1);
         }
     }
 }
